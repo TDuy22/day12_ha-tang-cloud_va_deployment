@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  # TRẠM SỐ 1: BỘ NÃO (Agent API Của Chúng Ta)
+  agent:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Liên kết với trạm số 2 bằng tên miền ảo "redis"
+      - REDIS_URL=redis://redis:6379  
+      # Cấp mật khẩu khóa cửa
+      - AGENT_API_KEY=super-vip-key-123
+      - PORT=8000
+    depends_on:
+      # Ra lệnh: Chờ trạm bơm máu Redis lên xong rồi tao mới khởi động
+      redis:
+        condition: service_started
+
+  # TRẠM SỐ 2: BỘ NHỚ ĐỆM (Redis Database)
+  redis:
+    # Lấy nhân bản Redis rất nhẹ (alpine) từ Docker Hub
+    image: redis:alpine
+    ports:
+      - "6379:6379"

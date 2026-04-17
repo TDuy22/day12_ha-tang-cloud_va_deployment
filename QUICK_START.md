@@ -111,7 +111,7 @@ railway domain
 
 Test it:
 ```bash
-curl https://your-agent.railway.app/ask -X POST \
+curl https://empty-project-production-1604.up.railway.app/ask -X POST \
   -H "Content-Type: application/json" \
   -d '{"question": "Am I on the cloud?"}'
 ```
